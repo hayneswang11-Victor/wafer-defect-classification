@@ -1,0 +1,57 @@
+project:
+  name: wafer-defect-classification
+  synthetic_data_only: true
+  random_seed: 42
+
+outputs:
+  synthetic_data_dir: data/synthetic
+  processed_data_dir: data/processed
+  split_dir: data/splits
+  model_dir: models
+  figure_dir: reports/figures
+  metrics_dir: reports/metrics
+  technical_report: reports/wafer_dram_defect_classification_report.md
+
+map_types:
+  wafer:
+    description: die-level spatial defect distribution across a wafer
+    output_dir: data/synthetic/wafer_maps
+    samples_per_class: 100
+    height: 64
+    width: 64
+    wafer_mask: circular
+  dram:
+    description: bit/address-level defect distribution inside one memory array
+    output_dir: data/synthetic/dram_fail_bitmaps
+    samples_per_class: 100
+    rows: 128
+    columns: 128
+
+defect_classes:
+  - random defect
+  - center defect
+  - edge defect
+  - ring defect
+  - scratch defect
+  - cluster defect
+  - row failure
+  - column failure
+  - block failure
+
+features:
+  use_density_features: true
+  use_centroid_features: true
+  use_radial_features: true
+  use_connected_component_features: true
+  use_projection_features: true
+
+model:
+  type: random_forest
+  test_size: 0.2
+  validation_size: 0.2
+  n_estimators: 200
+  max_depth: null
+
+reporting:
+  disclose_synthetic_data: true
+  avoid_overstating_results: true

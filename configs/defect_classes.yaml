@@ -1,0 +1,43 @@
+defect_classes:
+  - name: random defect
+    intended_map_types:
+      - wafer
+      - dram
+    description: Sparse defects distributed without a dominant spatial pattern.
+  - name: center defect
+    intended_map_types:
+      - wafer
+      - dram
+    description: Defects concentrated near the center of the map.
+  - name: edge defect
+    intended_map_types:
+      - wafer
+      - dram
+    description: Defects concentrated near map boundaries.
+  - name: ring defect
+    intended_map_types:
+      - wafer
+      - dram
+    description: Defects arranged in an annular or ring-like pattern.
+  - name: scratch defect
+    intended_map_types:
+      - wafer
+      - dram
+    description: Defects following a narrow line or diagonal streak.
+  - name: cluster defect
+    intended_map_types:
+      - wafer
+      - dram
+    description: Localized group of neighboring defects.
+  - name: row failure
+    intended_map_types:
+      - dram
+    description: A failed row or small set of rows in a memory array.
+  - name: column failure
+    intended_map_types:
+      - dram
+    description: A failed column or small set of columns in a memory array.
+  - name: block failure
+    intended_map_types:
+      - dram
+    description: Contiguous rectangular failed region in a memory array.

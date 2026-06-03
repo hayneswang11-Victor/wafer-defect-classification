@@ -1,0 +1,54 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Packaging/build artifacts
+build/
+dist/
+*.egg-info/
+
+# Notebook caches
+.ipynb_checkpoints/
+
+# Synthetic datasets and generated data artifacts
+data/synthetic/**/*.csv
+data/synthetic/**/*.json
+data/synthetic/**/*.npy
+data/synthetic/**/*.npz
+data/synthetic/**/*.png
+data/synthetic/**/*.parquet
+data/processed/**
+data/splits/**
+!data/processed/.gitkeep
+!data/splits/.gitkeep
+
+# Model artifacts
+models/**
+!models/.gitkeep
+*.joblib
+*.pkl
+
+# Bulk generated report outputs.
+# Keep reports/figures itself available so selected representative figures can
+# be committed later for portfolio review.
+reports/figures/generated/**
+reports/metrics/generated/**
+!reports/figures/.gitkeep
+!reports/metrics/.gitkeep
+
+# Local OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
