@@ -15,7 +15,6 @@ production performance.
 ## Portfolio Quick Links
 
 * [Technical Report](reports/wafer_dram_defect_classification_report.md)
-* [Interview Talking Points](reports/interview_talking_points.md)
 * [Model Results Summary](reports/model_results_summary.md)
 * [Figures Directory](reports/figures/)
 * [Metrics Directory](reports/metrics/)
