@@ -12,6 +12,40 @@ workflow: data simulation, feature engineering, classical machine learning,
 artifact generation, and careful interpretation. It does not claim real fab or
 production performance.
 
+## Portfolio Quick Links
+
+* [Technical Report](reports/wafer_dram_defect_classification_report.md)
+* [Interview Talking Points](reports/interview_talking_points.md)
+* [Model Results Summary](reports/model_results_summary.md)
+* [Figures Directory](reports/figures/)
+* [Metrics Directory](reports/metrics/)
+
+## Visual Results Preview
+
+### Synthetic wafer defect examples
+
+![Synthetic wafer defect examples](reports/figures/wafer_sample_grid.png)
+
+### Synthetic DRAM fail bit map examples
+
+![Synthetic DRAM fail bit map examples](reports/figures/dram_sample_grid.png)
+
+### Wafer random forest confusion matrix
+
+![Wafer random forest confusion matrix](reports/figures/wafer_random_forest_confusion_matrix.png)
+
+### DRAM random forest confusion matrix
+
+![DRAM random forest confusion matrix](reports/figures/dram_random_forest_confusion_matrix.png)
+
+### Wafer random forest feature importance
+
+![Wafer random forest feature importance](reports/figures/wafer_random_forest_feature_importance.png)
+
+### DRAM random forest feature importance
+
+![DRAM random forest feature importance](reports/figures/dram_random_forest_feature_importance.png)
+
 ## Project Overview
 
 The prototype generates synthetic defect maps for nine defect classes, extracts
