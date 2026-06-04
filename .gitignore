@@ -52,3 +52,6 @@ reports/metrics/generated/**
 Thumbs.db
 .vscode/
 .idea/
+
+# Local test temp files
+.tmp/
