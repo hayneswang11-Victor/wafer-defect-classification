@@ -11,6 +11,7 @@ from wafer_defect_classification.synthetic.dram_fail_bitmaps import (
     generate_dram_dataset,
 )
 from wafer_defect_classification.synthetic.wafer_maps import generate_wafer_dataset
+from wafer_defect_classification.train import train_model
 from wafer_defect_classification.visualization import save_sample_grid
 
 DEFAULT_CONFIG = Path("configs/default.yaml")
@@ -22,6 +23,9 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "generate":
         _run_generate(args)
+        return 0
+    if args.command == "train":
+        _run_train(args)
         return 0
 
     parser.error(f"Unknown command: {args.command}")
@@ -57,6 +61,34 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Override the configured number of samples per defect class.",
     )
     generate_parser.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="Override the configured random seed.",
+    )
+
+    train_parser = subparsers.add_parser(
+        "train",
+        help="Train classical synthetic prototype classifiers.",
+    )
+    train_parser.add_argument(
+        "--map-type",
+        choices=["wafer", "dram", "both"],
+        required=True,
+        help="Map type to train. Use both to train wafer and DRAM separately.",
+    )
+    train_parser.add_argument(
+        "--model",
+        choices=["logistic_regression", "random_forest", "all"],
+        required=True,
+        help="Classical model to train. Use all to train both supported models.",
+    )
+    train_parser.add_argument(
+        "--config",
+        default=str(DEFAULT_CONFIG),
+        help="Path to the YAML configuration file.",
+    )
+    train_parser.add_argument(
         "--seed",
         type=int,
         default=None,
@@ -136,6 +168,54 @@ def _print_dataset_summary(
     console.print(f"  labels: {dataset.label_mapping_file}")
     console.print(f"  info: {dataset.info_file}")
     console.print(f"  figure: {figure_path}")
+
+
+def _run_train(args: argparse.Namespace) -> None:
+    console = Console()
+    config = _load_config(Path(args.config))
+    seed = int(args.seed if args.seed is not None else config["project"]["random_seed"])
+    map_types = ["wafer", "dram"] if args.map_type == "both" else [args.map_type]
+    model_names = (
+        ["logistic_regression", "random_forest"]
+        if args.model == "all"
+        else [args.model]
+    )
+
+    console.print(
+        "[bold]Synthetic validation only:[/bold] training prototype classifiers on generated data."
+    )
+    for map_type in map_types:
+        for model_name in model_names:
+            result = train_model(
+                map_type=map_type,
+                model_name=model_name,
+                model_dir=config["outputs"]["model_dir"],
+                metrics_dir=config["outputs"]["metrics_dir"],
+                figure_dir=config["outputs"]["figure_dir"],
+                split_dir=config["outputs"]["split_dir"],
+                test_size=float(config["model"]["test_size"]),
+                validation_size=float(config["model"]["validation_size"]),
+                random_seed=seed,
+                n_estimators=int(config["model"]["n_estimators"]),
+            )
+            _print_training_summary(console, result)
+
+
+def _print_training_summary(console: Console, result: Any) -> None:
+    test_metrics = result.metrics["test"]
+    console.print(f"[bold]{result.map_type} {result.model_name}[/bold] trained")
+    console.print(f"  model: {result.model_file}")
+    console.print(f"  metrics: {result.metrics_file}")
+    console.print(f"  splits: {result.split_file}")
+    console.print(f"  confusion matrix: {result.confusion_matrix_figure}")
+    if result.model_diagnostic_figure is not None:
+        console.print(f"  diagnostic figure: {result.model_diagnostic_figure}")
+    console.print(
+        "  synthetic test metrics: "
+        f"accuracy={test_metrics['accuracy']:.3f}, "
+        f"macro_f1={test_metrics['macro_f1']:.3f}, "
+        f"weighted_f1={test_metrics['weighted_f1']:.3f}"
+    )
 
 
 if __name__ == "__main__":

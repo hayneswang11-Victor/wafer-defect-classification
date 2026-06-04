@@ -1,0 +1,413 @@
+{
+  "map_type": "wafer",
+  "model_name": "random_forest",
+  "synthetic_data_only": true,
+  "interpretation": "Synthetic validation metrics for a prototype; not real semiconductor manufacturing performance.",
+  "feature_names": [
+    "fail_density",
+    "fail_count",
+    "valid_area",
+    "centroid_y",
+    "centroid_x",
+    "centroid_distance_to_center",
+    "radial_mean",
+    "radial_std",
+    "radial_q25",
+    "radial_q75",
+    "edge_fail_ratio",
+    "center_fail_ratio",
+    "row_fail_mean",
+    "row_fail_max",
+    "row_fail_std",
+    "column_fail_mean",
+    "column_fail_max",
+    "column_fail_std",
+    "horizontal_projection_std",
+    "vertical_projection_std",
+    "connected_component_count",
+    "largest_component_area",
+    "largest_component_area_ratio",
+    "largest_component_bbox_height",
+    "largest_component_bbox_width",
+    "largest_component_eccentricity",
+    "bounding_box_height",
+    "bounding_box_width",
+    "bounding_box_area_ratio",
+    "aspect_ratio"
+  ],
+  "class_names": [
+    "random defect",
+    "center defect",
+    "edge defect",
+    "ring defect",
+    "scratch defect",
+    "cluster defect",
+    "row failure",
+    "column failure",
+    "block failure"
+  ],
+  "validation": {
+    "accuracy": 0.9930555555555556,
+    "macro_precision": 0.9934640522875817,
+    "macro_recall": 0.9930555555555556,
+    "macro_f1": 0.9930487672423156,
+    "weighted_f1": 0.9930487672423156,
+    "per_class": [
+      {
+        "class_index": 0,
+        "class_name": "random defect",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 16
+      },
+      {
+        "class_index": 1,
+        "class_name": "center defect",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 16
+      },
+      {
+        "class_index": 2,
+        "class_name": "edge defect",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 16
+      },
+      {
+        "class_index": 3,
+        "class_name": "ring defect",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 16
+      },
+      {
+        "class_index": 4,
+        "class_name": "scratch defect",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 16
+      },
+      {
+        "class_index": 5,
+        "class_name": "cluster defect",
+        "precision": 0.9411764705882353,
+        "recall": 1.0,
+        "f1": 0.9696969696969697,
+        "support": 16
+      },
+      {
+        "class_index": 6,
+        "class_name": "row failure",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 16
+      },
+      {
+        "class_index": 7,
+        "class_name": "column failure",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 16
+      },
+      {
+        "class_index": 8,
+        "class_name": "block failure",
+        "precision": 1.0,
+        "recall": 0.9375,
+        "f1": 0.967741935483871,
+        "support": 16
+      }
+    ],
+    "confusion_matrix": [
+      [
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        16,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        16,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        16,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        16,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        15
+      ]
+    ]
+  },
+  "test": {
+    "accuracy": 0.9777777777777777,
+    "macro_precision": 0.978835978835979,
+    "macro_recall": 0.9777777777777776,
+    "macro_f1": 0.977752908433268,
+    "weighted_f1": 0.977752908433268,
+    "per_class": [
+      {
+        "class_index": 0,
+        "class_name": "random defect",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 20
+      },
+      {
+        "class_index": 1,
+        "class_name": "center defect",
+        "precision": 0.9523809523809523,
+        "recall": 1.0,
+        "f1": 0.975609756097561,
+        "support": 20
+      },
+      {
+        "class_index": 2,
+        "class_name": "edge defect",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 20
+      },
+      {
+        "class_index": 3,
+        "class_name": "ring defect",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 20
+      },
+      {
+        "class_index": 4,
+        "class_name": "scratch defect",
+        "precision": 1.0,
+        "recall": 0.95,
+        "f1": 0.9743589743589743,
+        "support": 20
+      },
+      {
+        "class_index": 5,
+        "class_name": "cluster defect",
+        "precision": 1.0,
+        "recall": 0.9,
+        "f1": 0.9473684210526315,
+        "support": 20
+      },
+      {
+        "class_index": 6,
+        "class_name": "row failure",
+        "precision": 0.9523809523809523,
+        "recall": 1.0,
+        "f1": 0.975609756097561,
+        "support": 20
+      },
+      {
+        "class_index": 7,
+        "class_name": "column failure",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 20
+      },
+      {
+        "class_index": 8,
+        "class_name": "block failure",
+        "precision": 0.9047619047619048,
+        "recall": 0.95,
+        "f1": 0.926829268292683,
+        "support": 20
+      }
+    ],
+    "confusion_matrix": [
+      [
+        20,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        20,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        20,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        20,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        19,
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        18,
+        0,
+        0,
+        2
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        20,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        20,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        19
+      ]
+    ]
+  }
+}
