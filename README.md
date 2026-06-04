@@ -130,7 +130,6 @@ wafer-defect-classification/
 ├─ reports/
 │  ├─ figures/
 │  ├─ metrics/
-│  ├─ interview_talking_points.md
 │  ├─ model_results_summary.md
 │  └─ wafer_dram_defect_classification_report.md
 ├─ src/
