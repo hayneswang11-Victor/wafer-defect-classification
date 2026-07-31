@@ -55,3 +55,7 @@ Thumbs.db
 
 # Local test temp files
 .tmp/
+
+# Private local notes and generated Word exports
+_private_notes/
+*.docx
