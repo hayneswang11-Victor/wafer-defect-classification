@@ -59,3 +59,29 @@ Thumbs.db
 # Private local notes and generated Word exports
 _private_notes/
 *.docx
+
+# Public v0.1.1 reproducibility artifacts
+# Only these frozen synthetic datasets, split records and trained models are
+# published. Other generated data and model outputs remain ignored.
+!data/splits/
+!data/splits/dram_splits.json
+!data/splits/wafer_splits.json
+
+!data/synthetic/
+!data/synthetic/dram_fail_bitmaps/
+!data/synthetic/dram_fail_bitmaps/dataset_info.json
+!data/synthetic/dram_fail_bitmaps/dram_fail_bitmaps.npz
+!data/synthetic/dram_fail_bitmaps/label_mapping.json
+!data/synthetic/dram_fail_bitmaps/metadata.csv
+
+!data/synthetic/wafer_maps/
+!data/synthetic/wafer_maps/dataset_info.json
+!data/synthetic/wafer_maps/label_mapping.json
+!data/synthetic/wafer_maps/metadata.csv
+!data/synthetic/wafer_maps/wafer_maps.npz
+
+!models/
+!models/dram_logistic_regression.joblib
+!models/dram_random_forest.joblib
+!models/wafer_logistic_regression.joblib
+!models/wafer_random_forest.joblib

@@ -1,0 +1,16 @@
+{
+  "map_type": "wafer",
+  "description": "Synthetic die-level spatial defect distribution across a wafer.",
+  "synthetic_data_only": true,
+  "outside_wafer_value": -1,
+  "normal_die_value": 0,
+  "defect_die_value": 1,
+  "height": 64,
+  "width": 64,
+  "samples_per_class": 100,
+  "total_samples": 900,
+  "random_seed": 42,
+  "data_file": "data\\synthetic\\wafer_maps\\wafer_maps.npz",
+  "metadata_file": "data\\synthetic\\wafer_maps\\metadata.csv",
+  "label_mapping_file": "data\\synthetic\\wafer_maps\\label_mapping.json"
+}

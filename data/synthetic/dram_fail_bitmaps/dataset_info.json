@@ -1,0 +1,15 @@
+{
+  "map_type": "dram",
+  "description": "Synthetic bit/address-level defect distribution inside one memory array.",
+  "synthetic_data_only": true,
+  "normal_bit_value": 0,
+  "failed_bit_value": 1,
+  "rows": 128,
+  "columns": 128,
+  "samples_per_class": 100,
+  "total_samples": 900,
+  "random_seed": 42,
+  "data_file": "data\\synthetic\\dram_fail_bitmaps\\dram_fail_bitmaps.npz",
+  "metadata_file": "data\\synthetic\\dram_fail_bitmaps\\metadata.csv",
+  "label_mapping_file": "data\\synthetic\\dram_fail_bitmaps\\label_mapping.json"
+}

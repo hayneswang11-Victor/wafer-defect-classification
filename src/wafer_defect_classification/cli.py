@@ -11,6 +11,7 @@ from wafer_defect_classification.synthetic.dram_fail_bitmaps import (
     generate_dram_dataset,
 )
 from wafer_defect_classification.synthetic.wafer_maps import generate_wafer_dataset
+from wafer_defect_classification.predict import predict_file
 from wafer_defect_classification.train import train_model
 from wafer_defect_classification.visualization import save_sample_grid
 
@@ -26,6 +27,9 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     if args.command == "train":
         _run_train(args)
+        return 0
+    if args.command == "predict":
+        _run_predict(args)
         return 0
 
     parser.error(f"Unknown command: {args.command}")
@@ -93,6 +97,31 @@ def _build_parser() -> argparse.ArgumentParser:
         type=int,
         default=None,
         help="Override the configured random seed.",
+    )
+
+    predict_parser = subparsers.add_parser(
+        "predict",
+        help="Classify one map or a batch with a saved synthetic prototype model.",
+    )
+    predict_parser.add_argument(
+        "--model-path",
+        required=True,
+        help="Path to a saved .joblib model artifact.",
+    )
+    predict_parser.add_argument(
+        "--input",
+        required=True,
+        help="Path to a .npy, .npz, or single-map .csv input.",
+    )
+    predict_parser.add_argument(
+        "--array-key",
+        default="maps",
+        help="Array key for .npz input files. Default: maps.",
+    )
+    predict_parser.add_argument(
+        "--output",
+        default=None,
+        help="Optional .json or .csv prediction output path.",
     )
     return parser
 
@@ -199,6 +228,39 @@ def _run_train(args: argparse.Namespace) -> None:
                 n_estimators=int(config["model"]["n_estimators"]),
             )
             _print_training_summary(console, result)
+
+
+def _run_predict(args: argparse.Namespace) -> None:
+    console = Console()
+    result = predict_file(
+        model_path=args.model_path,
+        input_path=args.input,
+        output_path=args.output,
+        array_key=args.array_key,
+    )
+
+    console.print(
+        "[bold]Synthetic prototype inference only:[/bold] "
+        "predictions are not validated on real manufacturing data."
+    )
+    console.print(
+        f"[bold]{result.map_type} {result.model_name}[/bold] predicted "
+        f"{result.sample_count} map(s)"
+    )
+    for prediction in result.predictions[:10]:
+        confidence = prediction.get("confidence")
+        confidence_text = (
+            f"{confidence:.3f}" if isinstance(confidence, float) else "n/a"
+        )
+        console.print(
+            f"  sample={prediction['sample_index']}, "
+            f"class={prediction['predicted_class']}, "
+            f"confidence={confidence_text}"
+        )
+    if result.sample_count > 10:
+        console.print(f"  ... {result.sample_count - 10} additional prediction(s)")
+    if result.output_path is not None:
+        console.print(f"  output: {result.output_path}")
 
 
 def _print_training_summary(console: Console, result: Any) -> None:

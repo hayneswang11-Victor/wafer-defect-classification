@@ -51,15 +51,15 @@ The prototype generates synthetic defect maps for nine defect classes, extracts
 interpretable spatial features, and trains separate classical models for wafer
 maps and DRAM fail bit maps.
 
-The base workflow uses:
+The frozen public workflow uses:
 
 - `numpy`, `pandas`, `scikit-image`, and `scikit-learn`
 - Logistic regression and random forest classifiers
 - Matplotlib figures
-- No PyTorch dependency in the base project
+- No PyTorch or CNN dependency
 
-Optional CNN support is intentionally kept outside the base workflow in
-`requirements-cnn.txt`.
+The committed model artifacts are tied to the locked Python 3.12 environment
+documented in [MODEL_COMPATIBILITY.md](MODEL_COMPATIBILITY.md).
 
 ## Why Wafer Map and DRAM Fail Bit Map Are Different
 
@@ -138,6 +138,7 @@ wafer-defect-classification/
 │     ├─ preprocessing.py
 │     ├─ features.py
 │     ├─ train.py
+│     ├─ predict.py
 │     ├─ evaluate.py
 │     ├─ visualization.py
 │     └─ synthetic/
@@ -148,21 +149,22 @@ wafer-defect-classification/
 
 ## Setup Commands for Windows PowerShell
 
-Use the project virtual environment Python for reproducibility:
+The public package does not include a virtual environment. Create a clean
+Python 3.12 environment and install the exact dependency versions:
 
 ```powershell
-cd $HOME\Desktop\wafer-defect-classification
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe -m pip install -e .
+# Run the following commands from the repository root.
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -r requirements-lock.txt
+.\.venv\Scripts\python.exe -m pip install -e . --no-deps
 ```
 
-Optional CNN dependencies are not required:
-
-```powershell
-.\.venv\Scripts\python.exe -m pip install -r requirements-cnn.txt
-```
-
-Only install the optional file when CNN work is explicitly needed.
+The committed `.joblib` files were generated with Python 3.12.8 and the full
+lock in `requirements-lock.txt`. `requirements.txt` lists the direct project
+dependencies only. See
+[MODEL_COMPATIBILITY.md](MODEL_COMPATIBILITY.md) before loading them in another
+environment.
 
 ## Data Generation Commands
 
@@ -202,13 +204,50 @@ Train all classical models for both map types:
 .\.venv\Scripts\python.exe -m wafer_defect_classification.cli train --map-type both --model all
 ```
 
+## Prediction Commands
+
+The `predict` entry loads a saved model, validates a `.npy`, `.npz`, or
+single-map `.csv` input, extracts the same feature set used during training, and
+writes JSON or CSV predictions.
+
+Predict the committed wafer batch and save JSON:
+
+```powershell
+.\.venv\Scripts\python.exe -m wafer_defect_classification.cli predict `
+  --model-path models\wafer_random_forest.joblib `
+  --input data\synthetic\wafer_maps\wafer_maps.npz `
+  --array-key maps `
+  --output reports\wafer_random_forest_predictions.json
+```
+
+Predict the committed DRAM batch and save CSV:
+
+```powershell
+.\.venv\Scripts\python.exe -m wafer_defect_classification.cli predict `
+  --model-path models\dram_random_forest.joblib `
+  --input data\synthetic\dram_fail_bitmaps\dram_fail_bitmaps.npz `
+  --array-key maps `
+  --output reports\dram_random_forest_predictions.csv
+```
+
+Input rules:
+
+- `.npy`: one 2D map or a 3D batch `(n_samples, height, width)`
+- `.npz`: map array stored under `--array-key`, default `maps`
+- `.csv`: one 2D numeric map
+- output: `.json` or `.csv`
+
+Prediction output remains synthetic-prototype evidence only. It does not
+constitute validation on real fab, wafer-sort, CP, final-test, or inline
+inspection data.
+
 ## Test Commands
 
 Use a dynamic pytest temp directory on Windows to avoid stale temp-folder
 permission issues:
 
 ```powershell
-cd $HOME\Desktop\wafer-defect-classification
+# Run the following commands from the repository root.
 $run = ".tmp\pytest_" + (Get-Date -Format "yyyyMMdd_HHmmss")
 .\.venv\Scripts\python.exe -m pytest --basetemp=$run -p no:cacheprovider
 ```
@@ -257,6 +296,23 @@ The DRAM random forest score of `1.000` should be interpreted carefully: the
 synthetic classes are cleanly separable. This does not imply real production
 performance.
 
+## Frozen Public Package
+
+This public package intentionally excludes local or private development
+artifacts:
+
+- `.venv/`
+- `.tmp/`
+- `.git/`
+- `_private_notes/`
+- `__pycache__/`
+
+It retains the source code, configuration, synthetic datasets, trained model
+artifacts, representative figures, metrics, reports, and tests required to
+review and reproduce the prototype. File hashes are recorded in
+`SHA256SUMS.txt`, and the included-file inventory is recorded in
+`PUBLIC_PACKAGE_MANIFEST.md`.
+
 ## Limitations
 
 - Data is synthetic and generated from simple geometric rules.
@@ -264,7 +320,7 @@ performance.
 - No real fab, wafer sort, CP, final test, or inline inspection data is used.
 - No temporal drift, equipment drift, lot-to-lot variation, or process recipe
   context is modeled.
-- CNN support is not part of the base implementation.
+- CNN support is not included in this frozen public release.
 - The project is a prototype for engineering思路验证, not a production system.
 
 ## Interview-Safe Wording

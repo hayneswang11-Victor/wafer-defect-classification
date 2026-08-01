@@ -1,0 +1,24 @@
+{
+  "class_to_index": {
+    "random defect": 0,
+    "center defect": 1,
+    "edge defect": 2,
+    "ring defect": 3,
+    "scratch defect": 4,
+    "cluster defect": 5,
+    "row failure": 6,
+    "column failure": 7,
+    "block failure": 8
+  },
+  "index_to_class": {
+    "0": "random defect",
+    "1": "center defect",
+    "2": "edge defect",
+    "3": "ring defect",
+    "4": "scratch defect",
+    "5": "cluster defect",
+    "6": "row failure",
+    "7": "column failure",
+    "8": "block failure"
+  }
+}
